@@ -11,7 +11,7 @@ var Block     = mongoose.model( 'Block' );
 var Transaction     = mongoose.model( 'Transaction' );
 
 var grabBlocks = function(config) {
-    var web3 = new Web3(new Web3.providers.HttpProvider('http://37.143.13.112:' + 
+    var web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:' + 
         config.gethPort.toString()));
 
 
@@ -194,7 +194,7 @@ var writeTransactionsToDB = function(config, blockData) {
   Patch Missing Blocks
 */
 var patchBlocks = function(config) {
-    var web3 = new Web3(new Web3.providers.HttpProvider('http://37.143.13.112/:' + 
+    var web3 = new Web3(new Web3.providers.HttpProvider('http://localhost/:' + 
         config.gethPort.toString()));
 
     // number of blocks should equal difference in block numbers
