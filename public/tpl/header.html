@@ -4,7 +4,7 @@
     <!-- BEGIN LOGO -->
     <div class="page-logo">
         <a href="/">
-            <img src="/img/explorer-logo.png" alt="logo" class="logo-default" />
+            <img ng-show="settings.logo" src="{{settings.logo}}" alt="logo" class="logo-default" />
         </a>
     </div>
     <!-- END LOGO -->
@@ -17,7 +17,7 @@
                 <li class="dropdown">
                     <form name="form.searchForm" class="search-form">
                         <div class="input-group">
-                            <input type="text" name="explorerSearch" class="form-control" placeholder="Search by Address / Txhash / BlockNum" ng-model="form.searchInput" ng-keyup="$event.keyCode == 13 ? searchQuery(form.searchInput) : null">
+                            <input type="text" name="explorerSearch" class="form-control" placeholder="Search by Address / Txhash / BlockNum / BlockHash" ng-model="form.searchInput" ng-keyup="$event.keyCode == 13 ? searchQuery(form.searchInput) : null">
                             <span class="input-group-btn">
                                 <a class="btn" ng-click="searchQuery(form.searchInput)">
                                     <i class="icon-magnifier"></i>
@@ -41,15 +41,209 @@
         <!-- BEGIN MEGA MENU -->
         <div class="hor-menu hor-menu-light">
             <ul class="nav navbar-nav">
-                <li class="active">
-                    <a href="http://genom.tech">Home</a>
+                <li class="">
+                    <a href="/">Home</a>
                 </li>
-                <li class="deactive">
-                    <a href="http://explorer.genom.tech">Explorer</a>
+                <li>
+                    <a href="/accounts">Accounts</a>
                 </li>
-				<li class="deactive">
-                    <a href="http://wallet.genom.tech">Wallet</a>
+                
+                <li class="menu-dropdown classic-menu-dropdown ">
+                    <a data-hover="megamenu-dropdown" data-close-others="true" data-toggle="dropdown" href="javascript:;"> Mining
+                        <i class="fa fa-angle-down"></i>
+                    </a>
+                    <ul class="dropdown-menu pull-left">
+                        
+                        <li>
+                          <a href="https://wheretomine.io/coins/genom.html" target="_blank">
+                                <i class="icon-pin"></i> WhereToMine </a>
+                        </li>
+                        <li>
+                          <a href="https://www.coincalculators.io/coin.aspx?crypto=genom-mining-calculator" target="_blank">
+                                <i class="icon-pin"></i> Coin Calculators </a>
+                        </li>
+                    </ul>
                 </li>
+                <li class="menu-dropdown classic-menu-dropdown ">
+                    <a data-hover="megamenu-dropdown" data-close-others="true" data-toggle="dropdown" href="javascript:;"> Wallet
+                        <i class="fa fa-angle-down"></i>
+                    </a>
+                    <ul class="dropdown-menu pull-left">
+                        <li>
+                          <a href="https://github.com/genom-project/GUI" target="_blank">
+                                <i class="icon-pin"></i> GUI Wallet </a>
+                        </li>
+                        <li>
+                          <a href="https://wallet.genom.tech" target="_blank">
+                                <i class="icon-pin"></i> GenomWallet </a>
+                        </li>
+                        
+                    </ul>
+                </li>
+                <li class="menu-dropdown classic-menu-dropdown ">
+                    <a data-hover="megamenu-dropdown" data-close-others="true" data-toggle="dropdown" href="javascript:;"> Community
+                        <i class="fa fa-angle-down"></i>
+                    </a>
+                    <ul class="dropdown-menu pull-left">
+                        <li>
+                          <a href="https://discordapp.com/invite/HPzrJP4" target="_blank">
+                              <i class="fa fa-group"></i>
+                              <span class="title" data-toggle="tooltip" title=" Discord"> Discord </span>
+                          </a>
+                        </li>
+                        <li>
+                          <a href="https://twitter.com/genom_tech" target="_blank">
+                              <i class="fa fa-group"></i>
+                              <span class="title" data-toggle="tooltip" title=" Reddit"> twitter </span>
+                          </a>
+                        </li>
+                        
+                    </ul>
+                </li>
+                <!-- <li class="menu-dropdown mega-menu-dropdown ">
+                    <a data-hover="megamenu-dropdown" data-close-others="true" data-toggle="dropdown" href="/token" class="dropdown-toggle"> Tokens
+                        <i class="fa fa-angle-down"></i>
+                    </a>
+                    <ul class="dropdown-menu" style="min-width: 410px">
+                        <li>
+                            <div class="mega-menu-content">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <ul class="mega-menu-submenu">
+                                            <li>
+                                                <a href="/token/0x085fb4f24031eaedbc2b611aa528f22343eb52db" class="iconify">
+                                                    <i class="icon-pin"></i> BitEther</a>
+                                            </li>
+                                            <li>
+                                                <a href="/dao" class="iconify">
+                                                    <i class="icon-trash"></i> TheDAO</a>
+                                            </li>
+                                            <li>
+                                                <a href="/token" class="iconify">
+                                                    <i class="icon-puzzle"></i> View All Tokens </a>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <ul class="mega-menu-submenu">
+                                            <li>
+                                                <a href="/" class="iconify">
+                                                    <i class="icon-paper-clip"></i> View Contracts (N/A)</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </li> -->
+                <!-- <li class="menu-dropdown mega-menu-dropdown ">
+                    <a data-hover="megamenu-dropdown" data-close-others="true" data-toggle="dropdown" href="javascript:;" class="dropdown-toggle"> Stats
+                        <i class="fa fa-angle-down"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <div class="mega-menu-content">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <ul class="mega-menu-submenu">
+                                            <li>
+                                                <a href="/stats/hashrate">
+                                                    <i class="fa fa-line-chart"></i> HashRate Growth Chart </a>
+                                            </li>
+                                            <li>
+                                                <a href="/stats/miner_hashrate">
+                                                    <i class="fa fa-line-chart"></i> Miner Distribution Chart</a>
+                                            </li>
+                                            <li>
+                                                <a href="/stats/difficulty">
+                                                    <i class="fa fa-line-chart"></i> Difficulty Chart</a>
+                                            </li>
+                                            <li>
+                                                <a href="/stats/blocktime">
+                                                    <i class="fa fa-line-chart"></i> Blocktime Chart</a>
+                                            </li>
+                                            <li>
+                                                <a href="/stats/tx">
+                                                    <i class="fa fa-line-chart"></i> Transaction Chart</a>
+                                            </li>
+                                            <li>
+                                                <a href="/stats/supply">
+                                                    <i class="fa fa-line-chart"></i> Total Supply</a>
+                                            </li>
+                                            <li>
+                                                <a href="/stats/The_bomb_chart">
+                                                    <i class="fa fa-line-chart"></i> The bomb chart</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </li> -->
+                <!-- <li class="menu-dropdown classic-menu-dropdown ">
+                    <a data-hover="megamenu-dropdown" data-close-others="true" data-toggle="dropdown" href="javascript:;"> Misc
+                        <i class="fa fa-angle-down"></i>
+                    </a>
+                    <ul class="dropdown-menu pull-left">
+                        <li>
+                            <a href="/">
+                                <i class="icon-check"></i> Verify Contract (N/A)</a>
+                        </li>
+                        <li>
+                            <a href="/">
+                                <i class="icon-refresh"></i>
+                                <span class="title">Broadcast TXN (N/A)</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li> -->
+                <!-- <li class="menu-dropdown classic-menu-dropdown ">
+                    <a data-hover="megamenu-dropdown" data-close-others="true" data-toggle="dropdown" href="javascript:;"> Community
+                        <i class="fa fa-angle-down"></i>
+                    </a>
+                    <ul class="dropdown-menu pull-left">
+                        <li>
+                          <a href="https://forum.ethereumclassic.org" target="_blank">
+                              <i class="fa fa-group"></i>
+                              <span class="title" data-toggle="tooltip" title="Community Chat"> The Forum</span>
+                          </a>
+                        </li>
+                        <li>
+                            <a href="https://tokenmint.io" target="_blank">
+                                <i class="fa fa-leaf"></i>
+                                <span class="title" data-toggle="tooltip" title="ERC223 Token Factory" > TokenMint.io</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href=" https://ethereumproject.github.io/etherwallet/ " target="_blank">
+                                <i class="fa fa-folder-open"></i>
+                                <span class="title" data-toggle="tooltip" title="Client Side JS ETC Wallet"> ClassicEtherWallet.com</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="http://etcstats.net" target="_blank">
+                                <i class="fa fa-bar-chart"></i>
+                                <span class="title" data-toggle="tooltip" title="Mainnet Stats"> Live Network Stats </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="http://statebot.info" target="_blank">
+                                <i class="fa fa-android"></i>
+                                <span class="title" data-toggle="tooltip" title="JSON state dumps for analysis"> Statebot.io </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="http://teststats.epool.io/" target="_blank">
+                                <i class="fa fa-bar-chart"></i>
+                                <span class="title" data-toggle="tooltip" title="Live Testnet Stats">Morden network stats </span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </li> -->
             </ul>
         </div>
         <!-- END MEGA MENU -->

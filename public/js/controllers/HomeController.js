@@ -1,5 +1,5 @@
 angular.module('BlocksApp').controller('HomeController', function($rootScope, $scope, $http, $timeout) {
-    $scope.$on('$viewContentLoaded', function() {   
+    $scope.$on('$viewContentLoaded', function() {
         // initialize core components
         App.initAjax();
     });
@@ -15,12 +15,10 @@ angular.module('BlocksApp').controller('HomeController', function($rootScope, $s
         url: URL,
         data: {"action": "latest_blocks"}
       }).success(function(data) {
-        $scope.blockLoading = false;
         $scope.latest_blocks = data.blocks;
+        $scope.blockLoading = false;
       });
     }
-    
-
     $scope.reloadTransactions = function() {
       $scope.txLoading = true;
       $http({
@@ -30,58 +28,75 @@ angular.module('BlocksApp').controller('HomeController', function($rootScope, $s
       }).success(function(data) {
         $scope.latest_txs = data.txs;
         $scope.txLoading = false;
-      });  
+      });
     }
-
     $scope.reloadBlocks();
     $scope.reloadTransactions();
     $scope.txLoading = false;
     $scope.blockLoading = false;
+    $scope.settings = $rootScope.setup;
 })
+.directive('simpleSummaryStats', function($http) {
+  return {
+    restrict: 'E',
+    templateUrl: '/views/simple-summary-stats.html',
+    scope: true,
+    link: function(scope, elem, attrs){
+      scope.stats = {};
+      var statsURL = "/web3relay";
+      $http.post(statsURL, {"action": "hashrate"})
+       .then(function(res){
+          scope.stats.hashrate = res.data.hashrate;
+          scope.stats.difficulty = res.data.difficulty;
+          scope.stats.blockHeight = res.data.blockHeight;
+          scope.stats.blockTime = res.data.blockTime;
+          //console.log(res);
+        });
+      }
+  }
+})
+.directive('siteNotes', function() {
+  return {
+    restrict: 'E',
+    templateUrl: '/views/site-notes.html'
+  }
+})
+//OLD CODE DONT USE
 .directive('summaryStats', function($http) {
-          return {
-            restrict: 'E',
-            templateUrl: '/views/summary-stats.html',
-            scope: true,
-            link: function (scope, elem, attrs) {
-                scope.stats = {
-                    price: 0,
-                    hashrate: 0,
-                    hashrateChange24hr: 0,
-                    difficulty: 0,
-                    difficulty24hrChange: 0,
-                    blocktime: 0,
-                    blocktime24hrChange: 0
-                };
+  return {
+    restrict: 'E',
+    templateUrl: '/views/summary-stats.html',
+    scope: true,
+    link: function(scope, elem, attrs){
+      scope.stats = {};
 
-                $http.get('api/stats')
-                    .then(function (res) {
-                        if (res.data.price != null) {
-                            scope.stats.price = Math.round(res.data.price*1000)/1000;
-                        }
-                        if (res.data.priceChange24hr != null) {
-                            scope.stats.priceChange24hr = Math.round(res.data.priceChange24hr);
-                        }
-                        if (res.data.hashrate != null) {
-                            scope.stats.hashrate = res.data.hashrate;
-                        }
-                        if (res.data.hashrate24hr != null && scope.stats.hashrate != null) {
-                            scope.stats.hashrateChange24hr = Math.round((100 - res.data.hashrate24hr / scope.stats.hashrate * 100) * 100) / 100;
-                        }
-                        if (res.data.difficulty != null) {
-                            scope.stats.difficulty = res.data.difficulty;
-                        }
-                        if (res.data.difficulty24hr != null && scope.stats.difficulty != null) {
-                            scope.stats.difficulty24hrChange = Math.round((100 - res.data.difficulty24hr / scope.stats.difficulty * 100) * 100) / 100;
-                        }
-                        if (res.data.blocktime != null) {
-                            scope.stats.blocktime = Math.round(res.data.blocktime * 100) / 100;
-                        }
-                        if (res.data.blocktime != null && res.data.blocktime24hr != null) {
-                            scope.stats.blocktime24hrChange = Math.round((100 - res.data.blocktime / res.data.blocktime24hr * 100) * 100) / 100;
-                        }
-                    });
-            }
-        }
+      var etcEthURL = "/stats";
+      var etcPriceURL = "https://api.coinmarketcap.com/v1/ticker/ethereum-classic/";
+      var ethPriceURL = "https://api.coinmarketcap.com/v1/ticker/ethereum/"
+      scope.stats.ethDiff = 1;
+      scope.stats.ethHashrate = 1;
+      scope.stats.usdEth = 1;
+      $http.post(etcEthURL, {"action": "etceth"})
+       .then(function(res){
+          scope.stats.etcHashrate = res.data.etcHashrate;
+          scope.stats.ethHashrate = res.data.ethHashrate;
+          scope.stats.etcEthHash = res.data.etcEthHash;
+          scope.stats.ethDiff = res.data.ethDiff;
+          scope.stats.etcDiff = res.data.etcDiff;
+          scope.stats.etcEthDiff = res.data.etcEthDiff;
+        });
+      $http.get(etcPriceURL)
+       .then(function(res){
+          scope.stats.usdEtc = parseFloat(res.data[0]["price_usd"]);
+          scope.stats.usdEtcEth = parseInt(100*scope.stats.usdEtc/scope.stats.usdEth);
+        });
+      $http.get(ethPriceURL)
+       .then(function(res){
+          scope.stats.usdEth = parseFloat(res.data[0]["price_usd"]);
+          scope.stats.usdEtcEth = parseInt(100*scope.stats.usdEtc/scope.stats.usdEth);
+          scope.stats.ethChange = parseFloat(res.data.change);
+        });
+
+      }
+  }
 });
-

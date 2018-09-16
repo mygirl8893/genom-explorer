@@ -20,7 +20,16 @@ var Block = new Schema(
     "gasLimit": Number,
     "gasUsed": Number,
     "timestamp": Number,
+    "blockTime": Number,
     "uncles": [String]
+});
+
+var Account = new Schema(
+{
+    "address": {type: String, index: {unique: true}},
+    "balance": Number,
+    "blockNumber": Number,
+    "type": Number // address: 0x0, contract: 0x1
 });
 
 var Contract = new Schema(
@@ -49,27 +58,43 @@ var Transaction = new Schema(
     "gasPrice": String,
     "timestamp": Number,
     "input": String
-});
-var SummaryStats = new Schema(
-    {
-        "price": Number,
-        "priceChange24hr": Number,
-        "hashrate": Number,
-        "hashrateChange24hr": Number,
-        "difficulty": Number,
-        "difficultyChange24hr": Number,
-        "blocktime": Number,
-        "blocktimeChange24hr": Number
+}, {collection: "Transaction"});
+
+var BlockStat = new Schema(
+{
+    "number": {type: Number, index: {unique: true}},
+    "timestamp": Number,
+    "difficulty": String,
+    "hashrate": String,
+    "txCount": Number,
+    "gasUsed": Number,
+    "gasLimit": Number,
+    "miner": String,
+    "blockTime": Number,
+    "uncleCount": Number
 });
 
+// create indices
+Transaction.index({timestamp:-1});
+Transaction.index({blockNumber:-1});
+Transaction.index({from:1, blockNumber:-1});
+Transaction.index({to:1, blockNumber:-1});
+Account.index({balance:-1});
+Account.index({balance:-1, blockNumber:-1});
+Block.index({miner:1});
+Block.index({miner:1, blockNumber:-1});
+
+mongoose.model('BlockStat', BlockStat);
 mongoose.model('Block', Block);
+mongoose.model('Account', Account);
 mongoose.model('Contract', Contract);
 mongoose.model('Transaction', Transaction);
-mongoose.model('SummaryStats', SummaryStats);
+module.exports.BlockStat = mongoose.model('BlockStat');
 module.exports.Block = mongoose.model('Block');
 module.exports.Contract = mongoose.model('Contract');
 module.exports.Transaction = mongoose.model('Transaction');
-module.exports.SummaryStats = mongoose.model('SummaryStats');
+module.exports.Account = mongoose.model('Account');
 
-mongoose.connect('mongodb://localhost/blockDB');
-mongoose.set('debug', true);
+mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost/blockDB');
+
+// mongoose.set('debug', true);

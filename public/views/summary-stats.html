@@ -7,7 +7,7 @@
                         <small class="font-green-sharp">$</small>
                         <span data-counter="counterup" data-value="stats.usdEtc">{{stats.usdEtc}}</span>
                     </h3>
-                    <small>GEN Price</small>
+                    <small>ETC Price</small>
                 </div>
                 <div class="icon">
                     <i class="icon-fire"></i>
@@ -16,11 +16,11 @@
             <div class="progress-info">
                 <div class="progress">
                     <span style="width: {{stats.usdEtcEth}}%;" class="progress-bar progress-bar-success green-sharp">
-                        <span class="sr-only">{{stats.usdEtcEth}}% GEN USD price</span>
+                        <span class="sr-only">{{stats.usdEtcEth}}% ETC/ETH USD price</span>
                     </span>
                 </div>
                 <div class="status">
-                    <div class="status-title"> GEN USD Price </div>
+                    <div class="status-title"> ETC/ETH USD Price </div>
                     <div class="status-number"> {{stats.usdEtcEth}}% </div>
                 </div>
             </div>
@@ -31,19 +31,20 @@
             <div class="display">
                 <div class="number">
                     <h3 class="font-red-haze">
-                        <span data-counter="counterup" data-value="stats.hashrate">{{stats.hashrate | totalDifficulty}}/s</span>
+                        <span data-counter="counterup" data-value="stats.etcHashrate">{{stats.etcHashrate | totalDifficulty}}/s</span>
                     </h3>
-                    <small>GEN Avg Hashrate</small>
+                    <small>ETC Avg Hashrate</small>
                 </div>
             </div>
             <div class="progress-info">
                 <div class="progress">
                     <span style="width: {{stats.etcEthHash}}%;" class="progress-bar progress-bar-success red-haze">
+                        <span class="sr-only">{{stats.etcEthHash}}% </span>
                     </span>
                 </div>
                 <div class="status">
-                    <div class="status-title">Hashrate change 24hr</div>
-                    <div class="status-number"> {{stats.hashrateChange24hr}}% </div>
+                    <div class="status-title"> ETC/ETH Hashrate </div>
+                    <div class="status-number"> {{stats.etcEthHash}}% </div>
                 </div>
             </div>
         </div>
@@ -53,7 +54,7 @@
             <div class="display">
                 <div class="number">
                     <h3 class="font-blue-sharp">
-                        <span data-counter="counterup" data-value="{{stats.difficulty}}">{{stats.difficulty | totalDifficulty}}</span>
+                        <span data-counter="counterup" data-value="{{stats.etcEthDiff}}">{{stats.etcDiff | totalDifficulty}}</span>
                     </h3>
                     <small>DIFFICULTY</small>
                 </div>
@@ -64,11 +65,12 @@
             <div class="progress-info">
                 <div class="progress">
                     <span style="width: {{stats.etcEthDiff}}%;" class="progress-bar progress-bar-success blue-sharp">
+                        <span class="sr-only">{{stats.etcEthDiff}}% etc/eth difficulty</span>
                     </span>
                 </div>
                 <div class="status">
-                    <div class="status-title">Difficulty change 24hr</div>
-                    <div class="status-number"> {{stats.difficulty24hrChange}}% </div>
+                    <div class="status-title"> ETC/ETH difficulty </div>
+                    <div class="status-number"> {{stats.etcEthDiff}}% </div>
                 </div>
             </div>
         </div>
@@ -78,9 +80,10 @@
             <div class="display">
                 <div class="number">
                     <h3 class="font-purple-soft">
-                        <span data-counter="counterup" data-value="{{stats.blocktime}}">{{stats.blocktime}} Seconds</span>
+                        <small class="font-purple-soft">$</small>
+                        <span data-counter="counterup" data-value="{{stats.usdEth}}">{{stats.usdEth}}</span>
                     </h3>
-                    <small>BLOCK TIME</small>
+                    <small>ETH PRICE</small>
                 </div>
                 <div class="icon">
                     <i class="icon-trash"></i>
